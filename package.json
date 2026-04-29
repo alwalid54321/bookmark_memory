@@ -1,0 +1,35 @@
+{
+  "name": "bookmark_memory",
+  "version": "1.0.0",
+  "description": "AI-powered Chrome extension to search and chat with your bookmarks and web notes",
+  "private": true,
+  "scripts": {
+    "dev": "vite build --watch",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alwalid54321/bookmark_memory.git"
+  },
+  "keywords": ["chrome-extension", "bookmarks", "ai", "rag", "gemini", "ollama"],
+  "author": "alwalid54321",
+  "license": "MIT",
+  "type": "module",
+  "bugs": {
+    "url": "https://github.com/alwalid54321/bookmark_memory/issues"
+  },
+  "homepage": "https://github.com/alwalid54321/bookmark_memory#readme",
+  "dependencies": {
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.1.40",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "typescript": "^6.0.3",
+    "vite": "^8.0.10"
+  }
+}
