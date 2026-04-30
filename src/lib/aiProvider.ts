@@ -38,6 +38,7 @@ When answering questions:
 - Be conversational and helpful
 - If the user asks about a topic, look for bookmarks or notes that relate to that topic
 - Format URLs as clickable links when possible
+- Pay special attention to "Tags" and "Details" on notes. Users use tags as custom categories to organize their notes. If a user asks about a specific category, filter or group your response using those tags.
 
 You are privacy-focused: all data stays on the user's device.`;
 
@@ -65,8 +66,9 @@ function buildContext(results: SearchResult[]): string {
       const note = r.item as NoteEntry;
       context += `📝 NOTE [${relevance}% match]\n`;
       context += `   Text: "${note.text}"\n`;
+      if (note.details) context += `   Details/Comments: ${note.details}\n`;
       context += `   From: ${note.pageTitle} (${note.url})\n`;
-      if (note.tags.length > 0) context += `   Tags: ${note.tags.join(', ')}\n`;
+      if (note.tags.length > 0) context += `   Tags/Categories: ${note.tags.join(', ')}\n`;
       context += '\n';
     }
   }

@@ -11,6 +11,7 @@ import {
   setMeta,
   getMeta,
   getStats,
+  getNote,
   type BookmarkEntry,
   type NoteEntry,
 } from '../lib/vectorDb';
@@ -243,6 +244,27 @@ chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
         };
         await upsertNote(note);
         return { success: true, id: note.id };
+      }
+
+      case 'UPDATE_NOTE': {
+        const existingNote = await getNote(message.id);
+        if (!existingNote) throw new Error('Note not found');
+
+        const { details, tags } = message;
+        const textForEmbedding = `${existingNote.text} ${details || ''} ${(tags || []).join(' ')}`.trim();
+        
+        const embeddingConfig = await getEmbeddingConfig();
+        const embedding = await generateEmbedding(textForEmbedding, embeddingConfig);
+        
+        const updatedNote: NoteEntry = {
+          ...existingNote,
+          details,
+          tags: tags || [],
+          embedding,
+        };
+        
+        await upsertNote(updatedNote);
+        return { success: true };
       }
 
       case 'FULL_SYNC': {

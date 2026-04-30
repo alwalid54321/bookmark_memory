@@ -13,7 +13,10 @@ import {
   Trash2, 
   Send,
   ExternalLink,
-  Plus
+  Plus,
+  Edit2,
+  X,
+  Check
 } from 'lucide-react';
 
 // ─── Types ──────────────────────────────────────────────────────────
@@ -44,6 +47,7 @@ interface BookmarkEntry {
 interface NoteEntry {
   id: string;
   text: string;
+  details?: string;
   url: string;
   pageTitle: string;
   dateAdded: number;
@@ -71,6 +75,9 @@ export default function SidePanel() {
   const [notes, setNotes] = useState<NoteEntry[]>([]);
   const [bookmarks, setBookmarks] = useState<BookmarkEntry[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [editingNoteId, setEditingNoteId] = useState<string | null>(null);
+  const [editDetails, setEditDetails] = useState('');
+  const [editTags, setEditTags] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
@@ -233,6 +240,36 @@ export default function SidePanel() {
 
   const openOptions = () => {
     chrome.runtime.openOptionsPage();
+  };
+
+  const startEditingNote = (note: NoteEntry) => {
+    setEditingNoteId(note.id);
+    setEditDetails(note.details || '');
+    setEditTags(note.tags.join(', '));
+  };
+
+  const cancelEditingNote = () => {
+    setEditingNoteId(null);
+    setEditDetails('');
+    setEditTags('');
+  };
+
+  const saveNoteEdit = async (id: string) => {
+    setIsLoading(true);
+    const tagsArray = editTags.split(',').map(t => t.trim()).filter(Boolean);
+    
+    chrome.runtime.sendMessage(
+      { type: 'UPDATE_NOTE', id, details: editDetails.trim(), tags: tagsArray },
+      (response) => {
+        setIsLoading(false);
+        setEditingNoteId(null);
+        if (response?.success) {
+          loadNotes();
+        } else {
+          console.error('Failed to update note', response?.error);
+        }
+      }
+    );
   };
 
   // ─── Filtered lists ────────────────────────────────────────────
@@ -407,25 +444,63 @@ export default function SidePanel() {
             ) : (
               filteredNotes.map((note) => (
                 <div key={note.id} className="note-card" style={note.color ? { borderLeftColor: note.color, borderLeftWidth: 3 } : {}}>
-                  <div className="note-card-text">"{note.text}"</div>
-                  <div className="note-card-meta">
-                    <div>
-                      {note.tags.map(t => (
-                        <span key={t} className={`note-tag ${t === 'important' ? 'important' : ''}`}>{t}</span>
-                      ))}
-                      <a
-                        className="note-card-source"
-                        href={note.url}
-                        title={note.url}
-                        onClick={(e) => { e.preventDefault(); chrome.tabs.create({ url: note.url }); }}
-                      >
-                        {note.pageTitle || note.url}
-                      </a>
+                  {editingNoteId === note.id ? (
+                    <div className="note-edit-form">
+                      <div className="note-card-text" style={{ opacity: 0.7, marginBottom: 12 }}>"{note.text}"</div>
+                      <textarea
+                        className="input-field"
+                        placeholder="Add details, comments, or thoughts..."
+                        value={editDetails}
+                        onChange={e => setEditDetails(e.target.value)}
+                        rows={3}
+                        style={{ marginBottom: 8 }}
+                      />
+                      <input
+                        className="input-field"
+                        placeholder="Tags (comma separated, e.g., projectX, idea)"
+                        value={editTags}
+                        onChange={e => setEditTags(e.target.value)}
+                        style={{ marginBottom: 12 }}
+                      />
+                      <div className="note-edit-actions">
+                        <button className="btn btn-outline btn-sm" onClick={cancelEditingNote} disabled={isLoading}>
+                          <X size={14} /> Cancel
+                        </button>
+                        <button className="btn btn-primary btn-sm" onClick={() => saveNoteEdit(note.id)} disabled={isLoading}>
+                          <Check size={14} /> Save
+                        </button>
+                      </div>
                     </div>
-                    <button className="note-delete" onClick={() => handleDeleteNote(note.id)} title="Delete note">
-                      <Trash2 size={14} />
-                    </button>
-                  </div>
+                  ) : (
+                    <>
+                      <div className="note-card-text">"{note.text}"</div>
+                      {note.details && <div className="note-card-details">{note.details}</div>}
+                      <div className="note-card-meta">
+                        <div>
+                          {note.tags.map(t => (
+                            <span key={t} className={`note-tag ${t === 'important' ? 'important' : ''}`}>{t}</span>
+                          ))}
+                          <a
+                            className="note-card-source"
+                            href={note.url}
+                            title={note.url}
+                            onClick={(e) => { e.preventDefault(); chrome.tabs.create({ url: note.url }); }}
+                          >
+                            <Link size={10} style={{ marginRight: 4 }} />
+                            {note.pageTitle || note.url}
+                          </a>
+                        </div>
+                        <div className="note-actions">
+                          <button className="note-action-btn" onClick={() => startEditingNote(note)} title="Edit note details and tags">
+                            <Edit2 size={14} />
+                          </button>
+                          <button className="note-action-btn delete" onClick={() => handleDeleteNote(note.id)} title="Delete note">
+                            <Trash2 size={14} />
+                          </button>
+                        </div>
+                      </div>
+                    </>
+                  )}
                 </div>
               ))
             )}

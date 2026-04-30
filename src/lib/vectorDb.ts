@@ -23,6 +23,7 @@ export interface BookmarkEntry {
 export interface NoteEntry {
   id: string;
   text: string;
+  details?: string;
   url: string;
   pageTitle: string;
   embedding: number[];
@@ -108,6 +109,16 @@ export async function deleteNote(id: string): Promise<void> {
     tx.objectStore(STORE_NOTES).delete(id);
     tx.oncomplete = () => resolve();
     tx.onerror = () => reject(tx.error);
+  });
+}
+
+export async function getNote(id: string): Promise<NoteEntry | null> {
+  const db = await openDB();
+  return new Promise((resolve, reject) => {
+    const tx = db.transaction(STORE_NOTES, 'readonly');
+    const req = tx.objectStore(STORE_NOTES).get(id);
+    req.onsuccess = () => resolve(req.result ?? null);
+    req.onerror = () => reject(req.error);
   });
 }
 

@@ -560,7 +560,8 @@ body {
   color: var(--warning);
 }
 
-.note-delete {
+.note-delete,
+.note-action-btn {
   background: none;
   border: none;
   color: var(--text-muted);
@@ -569,11 +570,53 @@ body {
   padding: 4px;
   border-radius: 4px;
   transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.note-delete:hover {
+.note-action-btn:hover {
+  color: var(--accent);
+  background: rgba(0, 138, 255, 0.1);
+}
+
+.note-action-btn.delete:hover {
   color: var(--error);
   background: rgba(239, 68, 68, 0.1);
+}
+
+.note-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.note-card-details {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 8px;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 6px;
+  border-left: 2px solid var(--accent);
+}
+
+.note-edit-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.note-edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 12px;
+  height: auto;
 }
 
 .empty-state {
