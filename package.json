@@ -14,7 +14,7 @@
   },
   "keywords": ["chrome-extension", "bookmarks", "ai", "rag", "gemini", "ollama"],
   "author": "alwalid54321",
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "type": "module",
   "bugs": {
     "url": "https://github.com/alwalid54321/bookmark_memory/issues"

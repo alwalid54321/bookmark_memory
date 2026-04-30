@@ -74,4 +74,4 @@ The output will be generated in the `dist` directory, which you can load into Ch
 
 ## 📜 License
 
-This project is open-source under the MIT License.
+This project is open-source under the GNU GPL v3 License.
