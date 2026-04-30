@@ -22,7 +22,7 @@ export default function Options() {
   const [settings, setSettings] = useState<Settings>({
     aiProvider: 'gemini',
     geminiApiKey: '',
-    geminiModel: 'gemini-2.0-flash',
+    geminiModel: 'gemini-flash-latest',
     ollamaModel: 'llama3.2',
     ollamaEmbedModel: 'nomic-embed-text',
     embeddingProvider: 'local',
@@ -208,9 +208,9 @@ export default function Options() {
                 value={settings.geminiModel}
                 onChange={(e) => setSettings({ ...settings, geminiModel: e.target.value })}
               >
-                <option value="gemini-2.0-flash">Gemini 2.0 Flash (Fast)</option>
-                <option value="gemini-2.5-flash-preview-04-17">Gemini 2.5 Flash (Thinking)</option>
-                <option value="gemini-2.5-pro-preview-05-06">Gemini 2.5 Pro (Best)</option>
+                <option value="gemini-flash-latest">Gemini Flash Latest (Fast & Default)</option>
+                <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+                <option value="gemini-3.1-flash">Gemini 3.1 Flash</option>
               </select>
             </div>
           </>

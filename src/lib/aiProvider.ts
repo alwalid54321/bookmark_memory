@@ -81,7 +81,7 @@ async function queryGemini(
   messages: ChatMessage[],
   context: string,
   apiKey: string,
-  model: string = 'gemini-2.0-flash',
+  model: string = 'gemini-flash-latest',
 ): Promise<string> {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
 

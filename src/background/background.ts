@@ -48,7 +48,7 @@ async function getAIConfig(): Promise<AIConfig> {
         resolve({
           provider: result.aiProvider ?? 'gemini',
           geminiApiKey: result.geminiApiKey,
-          geminiModel: result.geminiModel ?? 'gemini-2.0-flash',
+          geminiModel: result.geminiModel ?? 'gemini-flash-latest',
           ollamaModel: result.ollamaModel ?? 'llama3.2',
           embeddingConfig,
         });
