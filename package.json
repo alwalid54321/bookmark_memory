@@ -12,7 +12,14 @@
     "type": "git",
     "url": "git+https://github.com/alwalid54321/bookmark_memory.git"
   },
-  "keywords": ["chrome-extension", "bookmarks", "ai", "rag", "gemini", "ollama"],
+  "keywords": [
+    "chrome-extension",
+    "bookmarks",
+    "ai",
+    "rag",
+    "gemini",
+    "ollama"
+  ],
   "author": "alwalid54321",
   "license": "GPL-3.0-only",
   "type": "module",
@@ -21,6 +28,7 @@
   },
   "homepage": "https://github.com/alwalid54321/bookmark_memory#readme",
   "dependencies": {
+    "lucide-react": "^1.14.0",
     "react": "^19.2.5",
     "react-dom": "^19.2.5"
   },

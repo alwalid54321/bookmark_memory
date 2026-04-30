@@ -1,4 +1,20 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
+import { 
+  Brain, 
+  RefreshCw, 
+  Settings, 
+  MessageSquare, 
+  FileText, 
+  Bookmark, 
+  Search, 
+  User, 
+  Bot, 
+  Link, 
+  Trash2, 
+  Send,
+  ExternalLink,
+  Plus
+} from 'lucide-react';
 
 // ─── Types ──────────────────────────────────────────────────────────
 
@@ -244,21 +260,21 @@ export default function SidePanel() {
       <div className="header">
         <div className="header-top">
           <div className="header-title">
-            <span className="header-logo">BM</span>
+            <span className="header-logo"><Brain size={20} /></span>
             <h1>Bookmark Memory</h1>
           </div>
           <div className="header-actions">
             <button className="icon-btn" onClick={handleSync} title="Sync bookmarks" disabled={isSyncing}>
-              {isSyncing ? 'Syncing...' : 'Sync'}
+              <RefreshCw size={14} className={isSyncing ? 'animate-spin' : ''} />
             </button>
             <button className="icon-btn" onClick={openOptions} title="Settings">
-              Settings
+              <Settings size={14} />
             </button>
           </div>
         </div>
         <div className="header-stats">
-          <span className="stat-chip">Bookmarks: <span className="num">{stats.bookmarkCount}</span></span>
-          <span className="stat-chip">Notes: <span className="num">{notes.length}</span></span>
+          <span className="stat-chip"><Bookmark size={11} /> <span className="num">{stats.bookmarkCount}</span></span>
+          <span className="stat-chip"><FileText size={11} /> <span className="num">{notes.length}</span></span>
         </div>
       </div>
 
@@ -273,13 +289,13 @@ export default function SidePanel() {
       {/* Tabs */}
       <div className="tab-bar">
         <button className={`tab ${activeTab === 'chat' ? 'active' : ''}`} onClick={() => setActiveTab('chat')}>
-          Chat
+          <MessageSquare size={14} /> Chat
         </button>
         <button className={`tab ${activeTab === 'notes' ? 'active' : ''}`} onClick={() => { setActiveTab('notes'); loadNotes(); }}>
-          Notes
+          <FileText size={14} /> Notes
         </button>
         <button className={`tab ${activeTab === 'bookmarks' ? 'active' : ''}`} onClick={() => { setActiveTab('bookmarks'); loadBookmarks(); }}>
-          Bookmarks
+          <Bookmark size={14} /> Bookmarks
         </button>
       </div>
 
@@ -289,7 +305,7 @@ export default function SidePanel() {
           <div className="messages">
             {messages.length === 0 ? (
               <div className="welcome">
-                <span className="welcome-icon">BM</span>
+                <span className="welcome-icon"><Brain size={48} /></span>
                 <h2>What are you looking for?</h2>
                 <p>Ask me about your bookmarks and saved notes. I'll search through everything you've saved.</p>
                 <div className="suggestions">
@@ -308,18 +324,18 @@ export default function SidePanel() {
               messages.map((msg, i) => (
                 <div key={i} className={`message ${msg.role}`}>
                   <div className="message-avatar">
-                    {msg.role === 'user' ? 'U' : 'AI'}
+                    {msg.role === 'user' ? <User size={14} /> : <Bot size={14} />}
                   </div>
                   <div className="message-bubble">
                     <div dangerouslySetInnerHTML={{ __html: formatMessage(msg.content) }} />
                     {msg.sources && msg.sources.length > 0 && (
                       <div className="message-sources">
                         <details>
-                          <summary>{msg.sources.length} source(s) used</summary>
+                          <summary><Link size={11} /> {msg.sources.length} source(s) used</summary>
                           {msg.sources.map((s, j) => (
                             <div key={j} className="source-item">
                               <span className={`source-badge ${s.type}`}>
-                                {s.type === 'bookmark' ? 'B' : 'N'}
+                                {s.type === 'bookmark' ? <Bookmark size={10} /> : <FileText size={10} />}
                               </span>
                               <span>
                                 {s.type === 'bookmark'
@@ -337,7 +353,7 @@ export default function SidePanel() {
             )}
             {isLoading && (
               <div className="message assistant">
-                <div className="message-avatar">AI</div>
+                <div className="message-avatar"><Bot size={14} /></div>
                 <div className="message-bubble">
                   <div className="typing-indicator">
                     <div className="typing-dot" />
@@ -363,7 +379,7 @@ export default function SidePanel() {
                 disabled={isLoading}
               />
               <button className="send-btn" onClick={handleSend} disabled={isLoading || !input.trim()}>
-                ➤
+                <Send size={16} />
               </button>
             </div>
           </div>
@@ -385,7 +401,7 @@ export default function SidePanel() {
           <div className="notes-container">
             {filteredNotes.length === 0 ? (
               <div className="empty-state">
-                <span className="icon">Note</span>
+                <span className="icon"><FileText size={40} /></span>
                 <p>No notes yet. Select text on any page and right-click → <strong>Save to Bookmark Memory</strong></p>
               </div>
             ) : (
@@ -407,7 +423,7 @@ export default function SidePanel() {
                       </a>
                     </div>
                     <button className="note-delete" onClick={() => handleDeleteNote(note.id)} title="Delete note">
-                      Delete
+                      <Trash2 size={14} />
                     </button>
                   </div>
                 </div>
@@ -430,8 +446,8 @@ export default function SidePanel() {
           <div className="bookmarks-container">
             {filteredBookmarks.length === 0 ? (
               <div className="empty-state">
-                <span className="icon">Bookmarks</span>
-                <p>{bookmarks.length === 0 ? 'No bookmarks indexed yet. Click 🔄 to sync.' : 'No bookmarks match your search.'}</p>
+                <span className="icon"><Bookmark size={40} /></span>
+                <p>{bookmarks.length === 0 ? 'No bookmarks indexed yet. Click Re-sync to begin.' : 'No bookmarks match your search.'}</p>
               </div>
             ) : (
               filteredBookmarks.slice(0, 100).map((bm) => (

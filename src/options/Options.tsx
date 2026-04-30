@@ -1,4 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { 
+  Brain, 
+  BarChart3, 
+  RefreshCw, 
+  Trash2, 
+  Bot, 
+  Sparkles, 
+  Home, 
+  Eye, 
+  EyeOff, 
+  ShieldCheck, 
+  Check, 
+  Save, 
+  Database,
+  Plug,
+  Info,
+  AlertCircle
+} from 'lucide-react';
 
 type Provider = 'gemini' | 'ollama';
 type EmbedProvider = 'gemini' | 'ollama' | 'local';
@@ -109,7 +127,7 @@ export default function Options() {
   return (
     <div className="options-page">
       <div className="options-header">
-        <span className="logo">BM</span>
+        <span className="logo"><Brain size={48} /></span>
         <h1>Bookmark Memory</h1>
         <p>Configure your AI-powered bookmark assistant</p>
       </div>
@@ -117,7 +135,7 @@ export default function Options() {
       {/* Stats */}
       <div className="section">
         <div className="section-title">
-          <span className="icon">Stat</span>
+          <span className="icon"><BarChart3 size={20} /></span>
           Database Status
         </div>
         <div className="stats-grid">
@@ -141,10 +159,10 @@ export default function Options() {
         )}
         <div className="btn-group" style={{ justifyContent: 'center' }}>
           <button className="btn btn-primary" onClick={handleSync} disabled={syncing}>
-            {syncing ? 'Syncing...' : 'Re-sync Bookmarks'}
+            <RefreshCw size={14} className={syncing ? 'animate-spin' : ''} /> {syncing ? 'Syncing...' : 'Re-sync Bookmarks'}
           </button>
           <button className="btn btn-danger" onClick={handleClear}>
-            Clear Data
+            <Trash2 size={14} /> Clear Data
           </button>
         </div>
       </div>
@@ -152,7 +170,7 @@ export default function Options() {
       {/* AI Provider */}
       <div className="section">
         <div className="section-title">
-          <span className="icon">AI</span>
+          <span className="icon"><Bot size={20} /></span>
           AI Provider
         </div>
         <div className="provider-cards">
@@ -160,7 +178,7 @@ export default function Options() {
             className={`provider-card ${settings.aiProvider === 'gemini' ? 'selected' : ''}`}
             onClick={() => setSettings({ ...settings, aiProvider: 'gemini' })}
           >
-            <span className="icon">Cloud</span>
+            <span className="icon"><Sparkles size={28} /></span>
             <div className="name">Gemini</div>
             <div className="desc">Fast, cloud-based AI by Google</div>
           </div>
@@ -168,7 +186,7 @@ export default function Options() {
             className={`provider-card ${settings.aiProvider === 'ollama' ? 'selected' : ''}`}
             onClick={() => setSettings({ ...settings, aiProvider: 'ollama' })}
           >
-            <span className="icon">Local</span>
+            <span className="icon"><Home size={28} /></span>
             <div className="name">Ollama</div>
             <div className="desc">100% local, private AI</div>
           </div>
@@ -191,7 +209,7 @@ export default function Options() {
                   onClick={() => setShowKey(!showKey)}
                   style={{ flexShrink: 0 }}
                 >
-                  {showKey ? 'Hide' : 'Show'}
+                  {showKey ? <EyeOff size={16} /> : <Eye size={16} />}
                 </button>
               </div>
               <p className="form-hint">
@@ -247,13 +265,13 @@ export default function Options() {
         {/* Test Connection */}
         <div className="btn-group">
           <button className="btn btn-primary" onClick={handleTest} disabled={testing}>
-            {testing ? 'Testing...' : 'Test Connection'}
+            {testing ? <RefreshCw size={14} className="animate-spin" /> : <Plug size={14} />} {testing ? 'Testing...' : 'Test Connection'}
           </button>
         </div>
         {testResult && (
           <div style={{ marginTop: 12 }}>
             <span className={`status-badge ${testResult.success ? 'success' : 'error'}`}>
-              {testResult.success ? 'Success' : 'Error'}: {testResult.message}
+              {testResult.success ? <Check size={14} /> : <AlertCircle size={14} />} {testResult.message}
             </span>
           </div>
         )}
@@ -262,7 +280,7 @@ export default function Options() {
       {/* Embedding Provider */}
       <div className="section">
         <div className="section-title">
-          <span className="icon">Vector</span>
+          <span className="icon"><Database size={20} /></span>
           Embedding Engine
         </div>
         <div className="form-group">
@@ -285,13 +303,13 @@ export default function Options() {
       {/* Save */}
       <div className="btn-group" style={{ justifyContent: 'center' }}>
         <button className="btn btn-primary" onClick={handleSave} style={{ padding: '12px 40px', fontSize: 14 }}>
-          {saved ? 'Saved' : 'Save Settings'}
+          {saved ? <Check size={16} /> : <Save size={16} />} {saved ? 'Saved' : 'Save Settings'}
         </button>
       </div>
 
       {/* Security Notice */}
       <div className="security-notice">
-        <h4>Privacy and Security</h4>
+        <h4><ShieldCheck size={16} /> Privacy and Security</h4>
         <ul>
           <li>All bookmarks, notes, and embeddings are stored locally in your browser</li>
           <li>API keys are stored in Chrome's secure extension storage</li>
