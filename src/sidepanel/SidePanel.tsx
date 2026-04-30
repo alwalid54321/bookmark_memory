@@ -244,21 +244,21 @@ export default function SidePanel() {
       <div className="header">
         <div className="header-top">
           <div className="header-title">
-            <span className="header-logo">🧠</span>
+            <span className="header-logo">BM</span>
             <h1>Bookmark Memory</h1>
           </div>
           <div className="header-actions">
             <button className="icon-btn" onClick={handleSync} title="Sync bookmarks" disabled={isSyncing}>
-              {isSyncing ? '⏳' : '🔄'}
+              {isSyncing ? 'Syncing...' : 'Sync'}
             </button>
             <button className="icon-btn" onClick={openOptions} title="Settings">
-              ⚙️
+              Settings
             </button>
           </div>
         </div>
         <div className="header-stats">
-          <span className="stat-chip">📌 <span className="num">{stats.bookmarkCount}</span> bookmarks</span>
-          <span className="stat-chip">📝 <span className="num">{notes.length}</span> notes</span>
+          <span className="stat-chip">Bookmarks: <span className="num">{stats.bookmarkCount}</span></span>
+          <span className="stat-chip">Notes: <span className="num">{notes.length}</span></span>
         </div>
       </div>
 
@@ -273,13 +273,13 @@ export default function SidePanel() {
       {/* Tabs */}
       <div className="tab-bar">
         <button className={`tab ${activeTab === 'chat' ? 'active' : ''}`} onClick={() => setActiveTab('chat')}>
-          💬 Chat
+          Chat
         </button>
         <button className={`tab ${activeTab === 'notes' ? 'active' : ''}`} onClick={() => { setActiveTab('notes'); loadNotes(); }}>
-          📝 Notes
+          Notes
         </button>
         <button className={`tab ${activeTab === 'bookmarks' ? 'active' : ''}`} onClick={() => { setActiveTab('bookmarks'); loadBookmarks(); }}>
-          📌 Bookmarks
+          Bookmarks
         </button>
       </div>
 
@@ -289,18 +289,18 @@ export default function SidePanel() {
           <div className="messages">
             {messages.length === 0 ? (
               <div className="welcome">
-                <span className="welcome-icon">🧠</span>
+                <span className="welcome-icon">BM</span>
                 <h2>What are you looking for?</h2>
                 <p>Ask me about your bookmarks and saved notes. I'll search through everything you've saved.</p>
                 <div className="suggestions">
                   <button className="suggestion-btn" onClick={() => handleSuggestion('What websites do I have about programming?')}>
-                    💡 What websites do I have about programming?
+                    What websites do I have about programming?
                   </button>
                   <button className="suggestion-btn" onClick={() => handleSuggestion('Find my notes about machine learning')}>
-                    🔍 Find my notes about machine learning
+                    Find my notes about machine learning
                   </button>
                   <button className="suggestion-btn" onClick={() => handleSuggestion('What was that website for design tools?')}>
-                    🎨 What was that website for design tools?
+                    What was that website for design tools?
                   </button>
                 </div>
               </div>
@@ -308,18 +308,18 @@ export default function SidePanel() {
               messages.map((msg, i) => (
                 <div key={i} className={`message ${msg.role}`}>
                   <div className="message-avatar">
-                    {msg.role === 'user' ? '👤' : '🧠'}
+                    {msg.role === 'user' ? 'U' : 'AI'}
                   </div>
                   <div className="message-bubble">
                     <div dangerouslySetInnerHTML={{ __html: formatMessage(msg.content) }} />
                     {msg.sources && msg.sources.length > 0 && (
                       <div className="message-sources">
                         <details>
-                          <summary>📎 {msg.sources.length} source(s) used</summary>
+                          <summary>{msg.sources.length} source(s) used</summary>
                           {msg.sources.map((s, j) => (
                             <div key={j} className="source-item">
                               <span className={`source-badge ${s.type}`}>
-                                {s.type === 'bookmark' ? '📌' : '📝'}
+                                {s.type === 'bookmark' ? 'B' : 'N'}
                               </span>
                               <span>
                                 {s.type === 'bookmark'
@@ -337,7 +337,7 @@ export default function SidePanel() {
             )}
             {isLoading && (
               <div className="message assistant">
-                <div className="message-avatar">🧠</div>
+                <div className="message-avatar">AI</div>
                 <div className="message-bubble">
                   <div className="typing-indicator">
                     <div className="typing-dot" />
@@ -385,7 +385,7 @@ export default function SidePanel() {
           <div className="notes-container">
             {filteredNotes.length === 0 ? (
               <div className="empty-state">
-                <span className="icon">📝</span>
+                <span className="icon">Note</span>
                 <p>No notes yet. Select text on any page and right-click → <strong>Save to Bookmark Memory</strong></p>
               </div>
             ) : (
@@ -407,7 +407,7 @@ export default function SidePanel() {
                       </a>
                     </div>
                     <button className="note-delete" onClick={() => handleDeleteNote(note.id)} title="Delete note">
-                      🗑️
+                      Delete
                     </button>
                   </div>
                 </div>
@@ -430,7 +430,7 @@ export default function SidePanel() {
           <div className="bookmarks-container">
             {filteredBookmarks.length === 0 ? (
               <div className="empty-state">
-                <span className="icon">📌</span>
+                <span className="icon">Bookmarks</span>
                 <p>{bookmarks.length === 0 ? 'No bookmarks indexed yet. Click 🔄 to sync.' : 'No bookmarks match your search.'}</p>
               </div>
             ) : (

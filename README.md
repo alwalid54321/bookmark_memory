@@ -1,19 +1,19 @@
-# Bookmark Memory 🧠
+# Bookmark Memory
 
 Bookmark Memory is a privacy-first, open-source Chrome Extension that acts as your personal "Second Brain". It uses Retrieval-Augmented Generation (RAG) to let you semantically search and chat with your saved bookmarks and highlighted text notes. 
 
 Say goodbye to endlessly scrolling through disorganized bookmark folders. Just ask, "What was that website about machine learning deployment?" and Bookmark Memory will find it.
 
-## ✨ Features
+## Features
 
-- **Semantic Chat**: Chat with your bookmarks. The AI understands the *meaning* of your search, not just exact keywords.
+- **Semantic Chat**: Chat with your bookmarks. The AI understands the meaning of your search, not just exact keywords.
 - **Smart Notes**: Highlight text on any website, right-click, and select "Save to Bookmark Memory" to store it as a searchable note.
 - **Dual AI Support**: Choose between **Gemini** (fast, cloud-based via API) or **Ollama** (100% local, private AI).
 - **Three Embedding Engines**: Generate semantic vectors using Gemini, Ollama, or a built-in zero-dependency local engine for instant, offline performance.
 - **Premium UI**: Enjoy a sleek, dark-themed, glassmorphism UI designed for focus and aesthetics.
 - **Automatic Sync**: Your bookmarks are automatically indexed when added, changed, or removed.
 
-## 🔒 Privacy & Security
+## Privacy & Security
 
 Your data is yours. We built Bookmark Memory with a strict "Local First" approach:
 
@@ -23,7 +23,7 @@ Your data is yours. We built Bookmark Memory with a strict "Local First" approac
 - **Zero-Backend Architecture**: There is no central server. You communicate directly with the AI providers.
 - **Total Local Control**: By combining the built-in local embedding engine with **Ollama**, you can run the entire semantic search pipeline completely offline and 100% locally on your machine.
 
-## 🚀 Installation & Setup
+## Installation & Setup
 
 ### 1. Load the Extension
 1. Clone this repository or download the source code.
@@ -55,7 +55,7 @@ To use local AI models, you need to configure Ollama to accept requests from the
 4. Restart the Ollama application completely.
 5. In the extension Options, select "Ollama" and click "Test Connection".
 
-## 🛠️ Developer Guide
+## Developer Guide
 
 To build the extension from source:
 
@@ -72,6 +72,6 @@ npm run dev
 
 The output will be generated in the `dist` directory, which you can load into Chrome.
 
-## 📜 License
+## License
 
 This project is open-source under the GNU GPL v3 License.
