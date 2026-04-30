@@ -1,77 +1,77 @@
 # Bookmark Memory
 
-Bookmark Memory is a privacy-first, open-source Chrome Extension that acts as your personal "Second Brain". It uses Retrieval-Augmented Generation (RAG) to let you semantically search and chat with your saved bookmarks and highlighted text notes. 
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat-square&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Chrome Web Store](https://img.shields.io/badge/Chrome%20Web%20Store-v1.0.0-blue?style=flat-square&logo=google-chrome&logoColor=white)](#)
+[![Privacy First](https://img.shields.io/badge/Privacy-First-008aff?style=flat-square)](#)
 
-Say goodbye to endlessly scrolling through disorganized bookmark folders. Just ask, "What was that website about machine learning deployment?" and Bookmark Memory will find it.
+Bookmark Memory is a privacy-focused, local-first Chrome Extension that acts as your personal "Second Brain". Using Retrieval-Augmented Generation (RAG), it allows you to semantically search and chat with your saved bookmarks and highlighted notes.
+
+## ⚡ Quick Start
+
+1. **Install**: Clone this repo and run `npm install && npm run build`.
+2. **Load**: Go to `chrome://extensions/`, enable **Developer Mode**, and click **Load Unpacked**. Select the `dist` folder.
+3. **Set Up AI**: Open the extension **Options** (gear icon) and:
+   - **Gemini**: Paste your API key from [Google AI Studio](https://aistudio.google.com/apikey).
+   - **Ollama**: Ensure Ollama is running with `OLLAMA_ORIGINS="chrome-extension://*"` (See setup below).
+4. **Chat**: Click the extension icon to open the side panel and start asking about your bookmarks!
+
+---
 
 ## Features
 
-- **Semantic Chat**: Chat with your bookmarks. The AI understands the meaning of your search, not just exact keywords.
-- **Smart Notes**: Highlight text on any website, right-click, and select "Save to Bookmark Memory" to store it as a searchable note.
-- **Dual AI Support**: Choose between **Gemini** (fast, cloud-based via API) or **Ollama** (100% local, private AI).
-- **Three Embedding Engines**: Generate semantic vectors using Gemini, Ollama, or a built-in zero-dependency local engine for instant, offline performance.
-- **Premium UI**: Enjoy a sleek, dark-themed, glassmorphism UI designed for focus and aesthetics.
-- **Automatic Sync**: Your bookmarks are automatically indexed when added, changed, or removed.
+- **Semantic Search & Chat**: Don't just search for keywords; ask questions like "Where did I save that article about quantum computing?"
+- **Local Smart Notes**: Highlight any text on the web, right-click, and save it directly to your searchable memory.
+- **Hybrid AI Engine**: Supports **Google Gemini** for high performance and **Ollama** for 100% private, offline use.
+- **Privacy by Design**: All data stays on your machine in IndexedDB. We never see your bookmarks or notes.
+- **Premium Dark UI**: A sleek, modern interface with professional Lucide icons and a responsive design.
+- **Zero Configuration Sync**: Automatically indexes your browser bookmarks upon installation and updates.
 
 ## Privacy & Security
 
-Your data is yours. We built Bookmark Memory with a strict "Local First" approach:
+Bookmark Memory is built on the principle of data sovereignty:
 
-- **100% Open Source**: The entire codebase is transparent and available for auditing.
-- **Local Storage**: All your bookmarks, notes, and vector embeddings are stored securely inside your browser using IndexedDB. They never leave your device unless you explicitly use a cloud-based AI.
-- **Secure API Keys**: If you use Gemini, your API key is stored locally using `chrome.storage.local`, which is isolated from web pages and not synced to the cloud.
-- **Zero-Backend Architecture**: There is no central server. You communicate directly with the AI providers.
-- **Total Local Control**: By combining the built-in local embedding engine with **Ollama**, you can run the entire semantic search pipeline completely offline and 100% locally on your machine.
+- **100% Open Source**: Transparent code that you can audit and verify.
+- **Local-First Storage**: Your semantic vectors and notes are stored in your browser's IndexedDB.
+- **No Tracking**: No telemetry, no analytics, no external trackers.
+- **Encrypted Storage**: Sensitive data like API keys are kept in Chrome's isolated storage.
+- **Offline Capabilities**: Use the built-in embedding engine and Ollama to run the entire pipeline without an internet connection.
 
 ## Installation & Setup
 
-### 1. Load the Extension
-1. Clone this repository or download the source code.
-2. Open Chrome and navigate to `chrome://extensions/`.
-3. Enable **Developer mode** (toggle in the top right).
-4. Click **Load unpacked** and select the `dist` folder generated after running the build step (see Developer Guide below).
+### Detailed Setup
 
-### 2. Configure Your AI Provider
-
-Open the extension's Options page (right-click the extension icon and select "Options", or click the gear icon in the side panel) and choose your AI backend:
-
-#### Option A: Gemini (Recommended for most users)
+#### 1. Gemini (Cloud-Based)
 1. Get a free API key from [Google AI Studio](https://aistudio.google.com/apikey).
-2. Enter the key in the settings.
-3. Select your preferred Gemini model (e.g., `gemini-2.0-flash`).
+2. Enter the key in the settings and select a model (e.g., `gemini-2.0-flash`).
 
-#### Option B: Ollama (100% Local & Private)
-To use local AI models, you need to configure Ollama to accept requests from the Chrome extension.
-
-1. Install [Ollama](https://ollama.com/) on your machine.
-2. Pull the required models via your terminal:
-   ```bash
-   ollama pull llama3.2          # For chat
-   ollama pull nomic-embed-text  # For embeddings
-   ```
-3. **Crucial Step (CORS setup)**: By default, Ollama blocks browser extensions. You must set the `OLLAMA_ORIGINS` environment variable to allow the extension.
-   - **Windows**: Search for "Environment Variables" in the Start menu -> Add `OLLAMA_ORIGINS` with value `chrome-extension://*` -> Restart Ollama.
-   - **macOS/Linux**: Run `OLLAMA_ORIGINS="chrome-extension://*" ollama serve` or configure your `systemd` service/`launchctl` to include this variable.
-4. Restart the Ollama application completely.
-5. In the extension Options, select "Ollama" and click "Test Connection".
+#### 2. Ollama (100% Local)
+1. Install [Ollama](https://ollama.com/).
+2. Pull models: `ollama pull llama3.2` and `ollama pull nomic-embed-text`.
+3. **CORS Configuration**:
+   - **Windows**: Add Environment Variable `OLLAMA_ORIGINS` = `chrome-extension://*`
+   - **macOS/Linux**: `launchctl setenv OLLAMA_ORIGINS "chrome-extension://*"` or export in your shell.
+4. Restart Ollama.
 
 ## Developer Guide
 
-To build the extension from source:
+If you want to contribute or build from source:
 
 ```bash
+# Clone the repository
+git clone https://github.com/alwalid54321/bookmark_memory.git
+
 # Install dependencies
 npm install
 
-# Build for production
+# Build the extension
 npm run build
 
-# Watch mode for active development
+# Development with hot-reload
 npm run dev
 ```
 
-The output will be generated in the `dist` directory, which you can load into Chrome.
-
 ## License
 
-This project is open-source under the GNU GPL v3 License.
+This project is licensed under the **GNU General Public License v3.0**. See the [LICENSE](LICENSE) file for details.
+
